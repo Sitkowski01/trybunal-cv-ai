@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import { type CSSProperties, useId, useState } from "react";
 import { CRITIC_LABELS } from "../labels.js";
 import { DEMO_CASE } from "./case.js";
 import ats from "./img/ats.webp";
@@ -75,17 +75,54 @@ export function DemoIntro({ onOpen }: DemoIntroProps) {
         </ul>
       </section>
 
-      <details>
-        <summary>CV kandydatki</summary>
-        <pre className="demo__doc">{DEMO_CASE.cv}</pre>
-      </details>
-      <details>
-        <summary>Ogłoszenie o pracę</summary>
-        <pre className="demo__doc">{DEMO_CASE.offer}</pre>
-      </details>
+      <section className="files" aria-labelledby="files-title">
+        <h2 id="files-title">Akta sprawy</h2>
+        <div className="files__list">
+          <Paper label="CV kandydatki" text={DEMO_CASE.cv} />
+          <Paper label="Ogłoszenie o pracę" text={DEMO_CASE.offer} />
+        </div>
+      </section>
 
     </article>
   );
+}
+
+/** Dokument z akt jako kartka: tytul z naglowka Markdown, reszta zwinieta do rozwiniecia. */
+function Paper({ label, text }: { readonly label: string; readonly text: string }) {
+  const [open, setOpen] = useState(false);
+  const [first = "", ...rest] = text.trim().split("\n");
+  const id = useId();
+  return (
+    <section className={`paper${open ? " paper--open" : ""}`} aria-label={label}>
+      <p className="paper__label">{label}</p>
+      <h3 className="paper__title">{first.replace(/^#\s*/u, "")}</h3>
+      <div id={id} className="paper__body">
+        {rest.map((line, i) => (
+          <PaperLine key={i} line={line} />
+        ))}
+      </div>
+      <button
+        type="button"
+        className="paper__toggle"
+        aria-expanded={open}
+        aria-controls={id}
+        onClick={() => {
+          setOpen(!open);
+        }}
+      >
+        {open ? "Zwiń" : "Czytaj całość"}
+      </button>
+    </section>
+  );
+}
+
+/** Tyle Markdownu, ile maja przyklady: naglowki ##, punkty i pogrubienia. */
+function PaperLine({ line }: { readonly line: string }) {
+  const plain = line.replaceAll("**", "");
+  if (plain.trim() === "" || /^\(.*fikcyjn/iu.test(plain)) return null; // fikcyjnosc mowi pieczatka na kartce
+  if (plain.startsWith("## ")) return <h4>{plain.slice(3)}</h4>;
+  if (plain.startsWith("- ")) return <p className="paper__item">{plain.slice(2)}</p>;
+  return <p>{plain}</p>;
 }
 
 /** Waga sadu jako SVG: znak ⚖ w fontach systemowych bywa kolorowym emoji albo innym glifem. */

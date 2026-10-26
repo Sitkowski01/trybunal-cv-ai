@@ -23,8 +23,6 @@ describe("DemoIntro", () => {
     expect(screen.getByText(/nie ma serwera ani modelu/u)).toBeInTheDocument();
     expect(screen.getByText(DEMO_CASE.summary)).toBeInTheDocument();
     expect(screen.getByRole("img", { name: /Sala rozpraw 3D/u })).toBeInTheDocument();
-    expect(screen.getByText("CV kandydatki").nextElementSibling).toHaveTextContent(DEMO_CASE.cv.split("\n")[0] ?? "");
-    expect(screen.getByText("Ogłoszenie o pracę").nextElementSibling).toHaveTextContent(DEMO_CASE.offer.split("\n")[0] ?? "");
     expect(screen.getByRole("link", { name: "Własne CV: uruchom projekt lokalnie" })).toHaveAttribute("href", REPO_URL);
     await userEvent.click(screen.getByRole("button", { name: "Otwórz rozprawę" }));
     expect(onOpen).toHaveBeenCalledOnce();
@@ -42,6 +40,23 @@ describe("DemoIntro", () => {
       "§Sędzia",
     ]);
     expect(jury.getByText("Najmocniejszy powód, żeby odrzucić")).toBeInTheDocument();
+  });
+
+  it("akta: tytul z naglowka dokumentu, tresc zwinieta do rozwiniecia, bez dopisku o fikcyjnosci", async () => {
+    render(<DemoIntro onOpen={vi.fn()} />);
+    const cv = within(screen.getByRole("region", { name: "CV kandydatki" }));
+    expect(cv.getByRole("heading", { name: /^Monika Sadowska — Junior Java Developer/u })).toBeInTheDocument();
+    expect(cv.getByRole("heading", { name: "Podsumowanie" })).toBeInTheDocument();
+    expect(cv.getByText(/Prowadziłam księgi 25 klientów/u)).toHaveClass("paper__item");
+    expect(cv.queryByText(/Osoba fikcyjna/u)).toBeNull();
+    expect(cv.queryByText("**", { exact: false })).toBeNull();
+    const toggle = cv.getByRole("button", { name: "Czytaj całość" });
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
+    await userEvent.click(toggle);
+    expect(cv.getByRole("button", { name: "Zwiń" })).toHaveAttribute("aria-expanded", "true");
+    const offer = within(screen.getByRole("region", { name: "Ogłoszenie o pracę" }));
+    expect(offer.getByRole("heading", { name: "Junior Java Developer — FinPay Systems" })).toBeInTheDocument();
+    expect(offer.getByRole("button", { name: "Czytaj całość" })).toHaveAttribute("aria-expanded", "false");
   });
 
 });

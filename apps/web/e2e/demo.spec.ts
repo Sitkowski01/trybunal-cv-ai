@@ -11,8 +11,10 @@ test("demo: strona startowa, odtworzenie nagrania do werdyktu, bez zadnego zapyt
   await page.goto("?tempo=20");
   await expect(page.getByText("Demo — odtwarzanie nagranej rozprawy")).toBeVisible();
   await expect(page.getByRole("button", { name: "Wnieś sprawę" })).toHaveCount(0);
-  await page.getByText("CV kandydatki").click();
-  await expect(page.getByText("Monika Sadowska").first()).toBeVisible();
+  const cv = page.getByRole("region", { name: "CV kandydatki" });
+  await cv.getByRole("button", { name: "Czytaj całość" }).click();
+  await expect(cv.getByText(/Prowadziłam księgi 25 klientów/u)).toBeVisible();
+  await expect(cv.getByText("Monika Sadowska", { exact: false }).first()).toBeVisible();
 
   await page.getByRole("button", { name: "Otwórz rozprawę" }).click();
   await expect(page).toHaveURL(/rozprawa=nagranie/u);

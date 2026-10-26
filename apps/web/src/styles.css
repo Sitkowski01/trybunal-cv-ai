@@ -545,6 +545,13 @@ select:focus-visible {
   }
 }
 
+/* Akta sprawy */
+.files__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+  gap: 1.5rem;
+}
+
 /* CV i oferta do rozwiniecia (do czasu kartek) */
 .intro summary {
   cursor: pointer;
