@@ -1,3 +1,7 @@
+// Fonty jak w portfolio, z paczki (CSP: tylko 'self'). Sala ich nie uzywa, wiec laduje je tylko strona startowa.
+import "@fontsource-variable/inter";
+import "@fontsource-variable/jetbrains-mono";
+import "@fontsource-variable/space-grotesk";
 import { type CSSProperties, useId, useState } from "react";
 import { CRITIC_LABELS } from "../labels.js";
 import { DEMO_CASE } from "./case.js";
@@ -66,7 +70,10 @@ export function DemoIntro({ onOpen }: DemoIntroProps) {
       </header>
 
       <section className="jury" aria-labelledby="jury-title">
-        <h2 id="jury-title">Skład sądu</h2>
+        <h2 id="jury-title">
+          <Tag n="01" />
+          Skład sądu
+        </h2>
         <ul className="jury__list">
           {BENCH.map((member, i) => (
             <li key={member.id} className={`jury__card jury__card--${member.id}`} style={{ "--i": i } as CSSProperties}>
@@ -84,7 +91,10 @@ export function DemoIntro({ onOpen }: DemoIntroProps) {
       </section>
 
       <section className="files" aria-labelledby="files-title">
-        <h2 id="files-title">Akta sprawy</h2>
+        <h2 id="files-title">
+          <Tag n="02" />
+          Akta sprawy
+        </h2>
         <div className="files__list">
           <Paper label="CV kandydatki" text={DEMO_CASE.cv} />
           <Paper label="Ogłoszenie o pracę" text={DEMO_CASE.offer} />
@@ -92,7 +102,10 @@ export function DemoIntro({ onOpen }: DemoIntroProps) {
       </section>
 
       <section className="steps" aria-labelledby="steps-title">
-        <h2 id="steps-title">Przebieg rozprawy</h2>
+        <h2 id="steps-title">
+          <Tag n="03" />
+          Przebieg rozprawy
+        </h2>
         <ol className="steps__list">
           {STEPS.map((step) => (
             <li key={step.label}>
@@ -111,6 +124,15 @@ export function DemoIntro({ onOpen }: DemoIntroProps) {
         </button>
       </footer>
     </article>
+  );
+}
+
+/** Numer sekcji w monospace przed tytulem; dla czytnika ekranu tylko tytul. */
+function Tag({ n }: { readonly n: string }) {
+  return (
+    <span className="intro__tag" aria-hidden="true">
+      {n}
+    </span>
   );
 }
 
