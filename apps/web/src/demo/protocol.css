@@ -1,0 +1,74 @@
+/* --- Protokol: wiersze z paskiem na wspolnej osi 0-90 s --- */
+.protocol__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--i-line);
+}
+
+.protocol__list li {
+  display: grid;
+  grid-template-columns: 9rem minmax(0, 1fr) 8rem minmax(0, 1.1fr);
+  grid-template-areas: "title text time track";
+  align-items: center;
+  gap: 0.5rem 1.5rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--i-line);
+}
+
+.protocol__list h3 {
+  grid-area: title;
+  font-size: 1.05rem;
+}
+
+.protocol__list p {
+  grid-area: text;
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--i-muted);
+}
+
+.protocol__list time {
+  grid-area: time;
+  font: 500 0.8rem/1 var(--i-mono);
+  color: var(--i-accent-hi);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.protocol__track {
+  grid-area: track;
+  position: relative;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: var(--i-line-soft);
+}
+
+.protocol__bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--from);
+  width: max(0.5rem, calc(var(--to) - var(--from)));
+  border-radius: 999px;
+  background: var(--i-accent);
+}
+
+/* Werdykt jako punkt na koncu osi */
+.protocol__list li:last-child .protocol__bar {
+  left: auto;
+  right: 0;
+  width: 0.5rem;
+  box-shadow: 0 0 0 4px rgb(16 185 129 / 0.25);
+}
+
+@media (max-width: 960px) {
+  .protocol__list li {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "title time"
+      "text text"
+      "track track";
+    gap: 0.4rem 1rem;
+  }
+}
