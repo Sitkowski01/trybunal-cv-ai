@@ -34,7 +34,7 @@ test("demo: odswiezenie odtwarza rozprawe od poczatku; przerwanie konczy ja jak 
   await page.reload();
   await expect(page.getByRole("button", { name: "Przerwij rozprawę" })).toBeVisible();
   await page.getByRole("button", { name: "Nowa sprawa" }).click();
-  await expect(page.getByRole("heading", { name: "Demo: nagrana rozprawa" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Otwórz rozprawę" })).toBeVisible();
 });
 
 test("demo: nieznana rozprawa w adresie — komunikat zamiast pustej sali", async ({ page }) => {

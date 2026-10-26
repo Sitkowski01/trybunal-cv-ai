@@ -177,6 +177,13 @@ select:focus-visible {
   color: var(--brass);
 }
 
+/* Sala na razie bez ramy */
+.hero__art img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 /* Formularz wniesienia */
 .filing {
   display: grid;

@@ -51,11 +51,14 @@ export function App({ api, sources, scene = null, demo = false }: AppProps) {
 
   return (
     <>
-      <header className="masthead">
-        <h1>Trybunał CV</h1>
-        <p>Pięciu krytyków AI ocenia CV pod ogłoszenie, spiera się w debacie, a sędzia ogłasza werdykt.</p>
-        {demo && <p className="masthead__demo">Demo — odtwarzanie nagranej rozprawy</p>}
-      </header>
+      {/* Strona startowa demo ma wlasny naglowek z sala; ten wraca na rozprawie. */}
+      {!(demo && trialId === null) && (
+        <header className="masthead">
+          <h1>Trybunał CV</h1>
+          <p>Pięciu krytyków AI ocenia CV pod ogłoszenie, spiera się w debacie, a sędzia ogłasza werdykt.</p>
+          {demo && <p className="masthead__demo">Demo — odtwarzanie nagranej rozprawy</p>}
+        </header>
+      )}
       {trialId === null ? (
         <main className="page">
           {demo ? (
