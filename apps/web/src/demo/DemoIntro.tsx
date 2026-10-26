@@ -25,6 +25,14 @@ const BENCH = [
   { id: "judge", portrait: judge, name: "Sędzia", role: "Ogłasza werdykt według stałej reguły i pisze uzasadnienie z poprawkami CV", emblem: "§" },
 ] as const;
 
+const STEPS = [
+  { label: "Oceny", text: "Pięciu krytyków czyta CV niezależnie i wystawia oceny 1–10 z cytatami." },
+  { label: "Oskarżenie", text: "Prokurator wygłasza najmocniejszy argument przeciw kandydatce." },
+  { label: "Debata", text: "Krytycy odpowiadają sobie nawzajem i mogą zmienić zdanie." },
+  { label: "Narada", text: "Każdy mówi ostatnie słowo przed werdyktem." },
+  { label: "Werdykt", text: "Zaprosić albo odrzucić — z uzasadnieniem i poprawkami CV." },
+] as const;
+
 /**
  * Strona startowa demo zamiast formularza: formularz przyjmowalby dowolne CV, a odtworzyl
  * zawsze to samo nagranie — to wprowadzaloby w blad. Tu widac sale, sklad sadu i akta sprawy.
@@ -83,6 +91,25 @@ export function DemoIntro({ onOpen }: DemoIntroProps) {
         </div>
       </section>
 
+      <section className="steps" aria-labelledby="steps-title">
+        <h2 id="steps-title">Przebieg rozprawy</h2>
+        <ol className="steps__list">
+          {STEPS.map((step) => (
+            <li key={step.label}>
+              <h3>{step.label}</h3>
+              <p>{step.text}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <footer className="closing">
+        <p className="closing__text">Sąd jest w komplecie, akta na stole.</p>
+        <button type="button" className="hero__open" onClick={onOpen}>
+          <Scales />
+          Wejdź na salę
+        </button>
+      </footer>
     </article>
   );
 }

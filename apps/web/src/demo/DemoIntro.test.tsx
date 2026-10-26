@@ -26,6 +26,9 @@ describe("DemoIntro", () => {
     expect(screen.getByRole("link", { name: "Własne CV: uruchom projekt lokalnie" })).toHaveAttribute("href", REPO_URL);
     await userEvent.click(screen.getByRole("button", { name: "Otwórz rozprawę" }));
     expect(onOpen).toHaveBeenCalledOnce();
+    // Drugi start na koncu strony, dla tych, ktorzy doczytali akta.
+    await userEvent.click(screen.getByRole("button", { name: "Wejdź na salę" }));
+    expect(onOpen).toHaveBeenCalledTimes(2);
   });
 
   it("sklad sadu: pieciu krytykow z rolami i sedzia", () => {
@@ -59,6 +62,11 @@ describe("DemoIntro", () => {
     expect(offer.getByRole("button", { name: "Czytaj całość" })).toHaveAttribute("aria-expanded", "false");
   });
 
+  it("przebieg rozprawy: piec etapow po kolei", () => {
+    render(<DemoIntro onOpen={vi.fn()} />);
+    const steps = within(screen.getByRole("region", { name: "Przebieg rozprawy" }));
+    expect(steps.getAllByRole("heading", { level: 3 }).map((h) => h.textContent)).toEqual(["Oceny", "Oskarżenie", "Debata", "Narada", "Werdykt"]);
+  });
 });
 
 describe("App w trybie demo", () => {
