@@ -182,3 +182,176 @@
   place-items: center;
   text-decoration: none;
 }
+
+.spot::before {
+  content: "";
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--i-accent-hi) 0 0.22rem, rgb(3 7 18 / 0.6) 0.24rem);
+  box-shadow:
+    0 0 0 1.5px var(--i-accent-hi),
+    0 4px 12px rgb(0 0 0 / 0.5);
+  transition: transform 0.2s var(--i-ease);
+}
+
+.spot:hover::before,
+.spot:focus-visible::before {
+  transform: scale(1.15);
+}
+
+/* Jeden "ping" po wejsciu na strone, zeby bylo widac, ze punkty sa klikalne — potem cisza */
+.spot::after {
+  content: "";
+  position: absolute;
+  inset: calc(50% - 0.625rem);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--i-accent-hi);
+  opacity: 0;
+  animation: spot-ping 1.4s var(--i-ease) both;
+  animation-delay: calc(1.2s + var(--n, 0) * 0.15s);
+}
+
+.spot:nth-of-type(2) {
+  --n: 1;
+}
+
+.spot:nth-of-type(3) {
+  --n: 2;
+}
+
+.spot:nth-of-type(4) {
+  --n: 3;
+}
+
+.spot__label {
+  position: absolute;
+  bottom: calc(100% - 0.4rem);
+  left: 50%;
+  translate: -50% 4px;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  background: rgb(3 7 18 / 0.88);
+  border: 1px solid var(--i-line);
+  color: var(--i-hi);
+  font: 500 0.72rem/1.2 var(--i-mono);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.18s,
+    translate 0.18s var(--i-ease);
+}
+
+.spot:hover .spot__label,
+.spot:focus-visible .spot__label {
+  opacity: 1;
+  translate: -50% 0;
+}
+
+@keyframes spot-ping {
+  0% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.4);
+  }
+}
+
+@media (max-width: 960px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "docket" "title" "lead" "art" "case" "actions" "facts";
+  }
+
+  .hero__art {
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 560px) {
+  /* Telefon: akcja na pierwszym ekranie w zasiegu kciuka, sala pod nia */
+  .hero {
+    grid-template-areas: "docket" "title" "lead" "case" "actions" "art" "facts";
+  }
+
+  .hero__title {
+    white-space: normal;
+  }
+
+  .hero__actions .intro__primary {
+    flex: 1 1 100%;
+  }
+
+  .hero__facts {
+    gap: 0 1.5rem;
+  }
+
+  .hero__facts dd {
+    font-size: 1.45rem;
+  }
+
+  /* Na telefonie podpisy punktow nie maja gdzie sie zmiescic, a tapniecie i tak przewija nizej */
+  .spot {
+    display: none;
+  }
+}
+
+/* Wejscie strony: kolejno docket, tytul, lead..., sala na koncu; tylko opacity i transform */
+.hero > * {
+  animation: rise 0.6s var(--i-ease) both;
+}
+
+.hero > :nth-child(2) {
+  animation-delay: 0.05s;
+}
+
+.hero > :nth-child(3) {
+  animation-delay: 0.1s;
+}
+
+.hero > :nth-child(4) {
+  animation-delay: 0.15s;
+}
+
+.hero > :nth-child(5) {
+  animation-delay: 0.2s;
+}
+
+.hero > :nth-child(6) {
+  animation-delay: 0.25s;
+}
+
+.hero > .hero__art {
+  animation: art-in 0.9s var(--i-ease) 0.15s both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@keyframes art-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero > *,
+  .hero > .hero__art,
+  .spot::after {
+    animation: none;
+  }
+
+  .spot::before,
+  .spot__label {
+    transition: none;
+  }
+}
