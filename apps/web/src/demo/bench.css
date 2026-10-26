@@ -185,3 +185,65 @@
   font-size: 0.85rem;
   color: var(--i-muted);
 }
+
+.stance figcaption strong {
+  color: var(--i-text);
+  font-weight: 600;
+}
+
+@keyframes stance-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+/* Telefon: lawa przewijana w bok z przyciaganiem, cytat pod nia */
+@media (max-width: 760px) {
+  .intro-bench {
+    --portrait: 6rem;
+  }
+
+  .intro-bench__row {
+    display: flex;
+    gap: 0.25rem;
+    margin: 0 calc(clamp(1rem, 4vw, 2rem) * -1);
+    padding: 0 clamp(1rem, 4vw, 2rem);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    mask-image: linear-gradient(90deg, transparent, #000 1rem, #000 calc(100% - 2rem), transparent);
+  }
+
+  .intro-bench__row::before {
+    left: 0;
+    right: auto;
+    width: 60rem;
+  }
+
+  .seat {
+    flex: 0 0 6.75rem;
+    scroll-snap-align: start;
+  }
+
+  .seat--prosecutor {
+    margin-left: 0;
+  }
+
+  .stance {
+    margin-top: 1.25rem;
+    padding: 1.25rem 1.1rem;
+    text-align: left;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stance blockquote {
+    animation: none;
+  }
+
+  .seat__portrait,
+  .seat__name {
+    transition: none;
+  }
+}
