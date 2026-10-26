@@ -387,39 +387,44 @@ body:has(.intro)::before {
   }
 }
 
-/* Glowny przycisk: mosiadz z blyskiem przesuwajacym sie po najechaniu */
+/* Glowny przycisk: pelna zielen jak akcent portfolio, poswiata zamiast mosiadzu */
 .hero__open {
   position: relative;
   overflow: hidden;
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  min-height: 3.25rem;
-  padding: 0.8rem 1.6rem;
-  font-size: 1.1rem;
-  border-color: #e6c06a;
-  background: linear-gradient(180deg, #e6c06a, var(--brass) 60%, #b98f39);
+  min-height: 3.1rem;
+  padding: 0.75rem 1.3rem;
+  border: 1px solid var(--i-bull-hi);
+  border-radius: 10px;
+  background: var(--i-bull);
+  color: #022c22;
+  font: 700 1rem/1 var(--i-display);
+  letter-spacing: 0.01em;
   box-shadow:
-    0 10px 30px -10px rgb(212 169 74 / 0.6),
-    inset 0 1px 0 rgb(255 255 255 / 0.35);
+    0 0 25px rgb(16 185 129 / 0.35),
+    inset 0 1px 0 rgb(255 255 255 / 0.25);
   transition:
     transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow 0.2s;
+    box-shadow 0.2s,
+    background-color 0.2s;
 }
 
 .hero__open::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.45) 50%, transparent 65%);
+  background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.35) 50%, transparent 65%);
   transform: translateX(-120%);
 }
 
 .hero__open:hover {
   transform: translateY(-2px);
+  background: var(--i-bull-hi);
   box-shadow:
-    0 16px 36px -10px rgb(212 169 74 / 0.75),
-    inset 0 1px 0 rgb(255 255 255 / 0.35);
+    0 0 40px rgb(16 185 129 / 0.5),
+    inset 0 1px 0 rgb(255 255 255 / 0.3);
 }
 
 .hero__open:hover::after {
@@ -431,19 +436,19 @@ body:has(.intro)::before {
   transform: translateY(0);
 }
 
-/* Sala w ramie: zloty brzeg, glebia i powolny najazd kamery */
+/* Sala w ramce jak zrzut na karcie projektu: cienka krawedz, zielona poswiata, powolny najazd kamery */
 .hero__art {
   grid-area: art;
   position: relative;
   align-self: center;
   border-radius: 16px;
-  padding: 6px;
-  overflow: hidden; /* najazd kamery zostaje w ramie */
-  background: linear-gradient(145deg, #e6c06a, #6b4f1f 45%, #c79b45);
+  padding: 0;
+  overflow: hidden; /* najazd kamery zostaje w ramce */
+  border: 1px solid rgb(16 185 129 / 0.35);
+  background: var(--i-panel);
   box-shadow:
-    0 40px 80px -30px rgb(0 0 0 / 0.85),
-    0 0 0 1px rgb(0 0 0 / 0.4),
-    0 0 120px -40px rgb(212 169 74 / 0.45);
+    0 40px 80px -30px rgb(0 0 0 / 0.9),
+    0 0 60px -10px rgb(16 185 129 / 0.25);
   animation: art-in 1s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
@@ -451,7 +456,6 @@ body:has(.intro)::before {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 11px;
   animation: dolly 24s ease-in-out 1s infinite alternate;
   transform-origin: 50% 40%;
 }
@@ -459,23 +463,25 @@ body:has(.intro)::before {
 .hero__art::after {
   content: "";
   position: absolute;
-  inset: 6px;
-  border-radius: 11px;
+  inset: 0;
   pointer-events: none;
-  box-shadow: inset 0 0 60px rgb(22 17 13 / 0.45);
+  background: linear-gradient(180deg, transparent 55%, rgb(3 7 18 / 0.55));
 }
 
 .hero__art figcaption {
   position: absolute;
-  left: 1.1rem;
-  bottom: 1.1rem;
-  max-width: calc(100% - 2.2rem);
-  padding: 0.35rem 0.75rem;
-  border-radius: 999px;
-  background: rgb(22 17 13 / 0.78);
+  left: 1rem;
+  bottom: 1rem;
+  max-width: calc(100% - 2rem);
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--i-line-strong);
+  border-radius: 8px;
+  background: rgb(3 7 18 / 0.75);
   backdrop-filter: blur(6px);
-  color: var(--text);
-  font-size: 0.8rem;
+  color: var(--i-text);
+  font: 500 0.72rem/1.2 var(--i-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   z-index: 1;
 }
 
@@ -503,7 +509,8 @@ body:has(.intro)::before {
 }
 
 @media (max-width: 560px) {
-  .hero__open {
+  .hero__open,
+  .hero__actions a {
     flex: 1 1 100%;
     justify-content: center;
   }
@@ -511,12 +518,14 @@ body:has(.intro)::before {
 
 @media (prefers-reduced-motion: reduce) {
   .hero__art,
-  .hero__art img {
+  .hero__art img,
+  .hero__badge::before {
     animation: none;
   }
 
   .hero__open,
-  .hero__open::after {
+  .hero__open::after,
+  .hero__actions a {
     transition: none;
   }
 }
