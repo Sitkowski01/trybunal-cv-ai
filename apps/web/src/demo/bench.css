@@ -1,0 +1,187 @@
+/* --- Lawa: postacie na wspolnej podlodze, wybrana w swietle, reszta w polcieniu --- */
+.intro-bench {
+  /* Portret nie szerszy niz kolumna lawy (6 kolumn na szerokosc tresci) */
+  --portrait: clamp(5.5rem, 11vw, 10.5rem);
+}
+
+.intro-bench__row {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 0.5rem;
+  padding: 0 0.5rem;
+}
+
+/* Podloga: linia na wysokosci stop wszystkich postaci */
+.intro-bench__row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--portrait) * 1.25 + 0.5rem);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--i-line) 8%, var(--i-line) 92%, transparent);
+}
+
+.seat {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 0.25rem 0.75rem;
+  border: 0;
+  border-radius: 12px;
+  background: none;
+  box-shadow: none;
+  color: var(--i-muted);
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+}
+
+.seat__portrait {
+  position: relative; /* nad poswiata z ::before */
+  width: var(--portrait);
+  height: calc(var(--portrait) * 1.25);
+  object-fit: contain;
+  object-position: bottom;
+  margin-bottom: 0.75rem;
+  filter: grayscale(0.55) brightness(0.62) drop-shadow(0 14px 14px rgb(0 0 0 / 0.6));
+  transition:
+    filter 0.3s var(--i-ease),
+    transform 0.3s var(--i-ease);
+  transform-origin: 50% 100%;
+}
+
+.seat__name {
+  font: 600 0.95rem/1.2 var(--i-display);
+  color: var(--i-muted);
+  transition: color 0.2s;
+}
+
+.seat__score {
+  font: 500 0.75rem/1.3 var(--i-mono);
+  color: var(--i-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.seat__score b {
+  font: 600 1rem/1 var(--i-display);
+  color: var(--i-text);
+}
+
+.seat__note {
+  display: block;
+  color: var(--i-faint);
+}
+
+.seat__score--sealed {
+  max-width: 15ch;
+}
+
+/* Wybrany: pelny kolor, lekko wyzej, swiatlo z gory jak reflektor nad lawa */
+.seat[aria-pressed="true"] .seat__portrait {
+  filter: drop-shadow(0 16px 16px rgb(0 0 0 / 0.65));
+  transform: translateY(-6px) scale(1.04);
+}
+
+.seat[aria-pressed="true"] .seat__name {
+  color: var(--i-hi);
+}
+
+.seat[aria-pressed="true"] .seat__score b {
+  color: var(--i-accent-hi);
+}
+
+.seat::before {
+  content: "";
+  position: absolute;
+  inset: -1rem 0 auto;
+  height: calc(var(--portrait) * 1.25 + 1.5rem);
+  background: radial-gradient(closest-side, rgb(16 185 129 / 0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.seat[aria-pressed="true"]::before {
+  opacity: 1;
+}
+
+/* Sedzia na podwyzszeniu, prokurator odsuniety pod mownice i w czerwieni oskarzenia */
+.seat--judge .seat__portrait {
+  margin-top: -1.25rem;
+  margin-bottom: 2rem;
+}
+
+.seat--prosecutor {
+  margin-left: 0.75rem;
+}
+
+.seat--prosecutor[aria-pressed="true"] .seat__score b {
+  color: var(--i-bear);
+}
+
+.seat--prosecutor::before {
+  background: radial-gradient(closest-side, rgb(248 113 113 / 0.16), transparent);
+}
+
+/* Podwyzszenie sedziego: stopien od podlogi do stop postaci */
+.seat--judge::after {
+  content: "";
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  top: calc(var(--portrait) * 1.25 + 0.5rem - 1.25rem);
+  height: 1.25rem;
+  border: 1px solid var(--i-line);
+  border-bottom: 0;
+  border-radius: 6px 6px 0 0;
+  background: linear-gradient(180deg, var(--i-surface-2), var(--i-surface));
+}
+
+@media (hover: hover) {
+  .seat:hover .seat__portrait {
+    filter: grayscale(0.2) brightness(0.85) drop-shadow(0 14px 14px rgb(0 0 0 / 0.6));
+  }
+
+  .seat[aria-pressed="true"]:hover .seat__portrait {
+    filter: drop-shadow(0 16px 16px rgb(0 0 0 / 0.65));
+  }
+}
+
+/* Wypowiedz wybranego: duzy cytat pod lawa, zmienia sie z krotkim przenikaniem */
+.stance {
+  margin: 2rem auto 0;
+  max-width: 50rem;
+  padding: 1.75rem 2rem;
+  border: 1px solid var(--i-line);
+  border-radius: 14px;
+  background: linear-gradient(180deg, var(--i-surface-2), var(--i-surface));
+  text-align: center;
+}
+
+.stance blockquote {
+  margin: 0;
+  font: 500 clamp(1.1rem, 2.2vw, 1.4rem) / 1.45 var(--i-display);
+  letter-spacing: -0.01em;
+  color: var(--i-hi);
+  text-wrap: balance;
+  animation: stance-in 0.35s var(--i-ease) both;
+}
+
+/* Panel w barwie mowiacego: czerwien oskarzenia, zielen sedziego */
+.stance--prosecutor {
+  border-color: rgb(248 113 113 / 0.35);
+}
+
+.stance--judge {
+  border-color: rgb(52 211 153 / 0.35);
+}
+
+.stance figcaption {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--i-muted);
+}
