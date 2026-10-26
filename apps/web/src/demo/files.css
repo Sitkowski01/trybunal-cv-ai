@@ -151,3 +151,72 @@ mark.heat--5 {
   color: var(--i-hi);
   quotes: "„" "”";
 }
+
+.legend__top span {
+  font: 600 0.8rem/1 var(--i-mono);
+  color: var(--i-accent-hi);
+}
+
+.offer {
+  padding: 1.25rem 1.35rem;
+  border: 1px solid var(--i-line);
+  border-radius: 14px;
+  background: var(--i-surface);
+}
+
+.offer .doc__path {
+  margin-bottom: 0.9rem;
+}
+
+.offer__title {
+  font-size: 1.02rem;
+  line-height: 1.35;
+}
+
+.offer__body {
+  margin-top: 0.5rem;
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+.offer__toggle {
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 960px) {
+  .files__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .files__side {
+    position: static;
+  }
+}
+
+/* Akta wchodza przy przewijaniu: zaznaczenia "nanoszone" od lewej, gdy CV pojawia sie na ekranie */
+@supports (animation-timeline: view()) {
+  mark.heat {
+    background-image: linear-gradient(var(--heat), var(--heat));
+    background-color: transparent;
+    background-repeat: no-repeat;
+    animation: ink linear both;
+    animation-timeline: view();
+    /* Konczy sie, gdy fragment caly wejdzie na ekran: to, co widac w calosci, jest zaznaczone w calosci */
+    animation-range: entry 0% entry 100%;
+  }
+
+  @keyframes ink {
+    from {
+      background-size: 0% 100%;
+    }
+    to {
+      background-size: 100% 100%;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  mark.heat {
+    animation: none;
+  }
+}
