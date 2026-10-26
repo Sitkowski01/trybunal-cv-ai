@@ -3,11 +3,15 @@ import { toSse } from "../test/sse.js";
 import { envelopes, trial } from "../test/trials.js";
 import raw from "./recording.sse?raw";
 import { readRecording } from "./recording.js";
-import { mostQuoted, segments, summarize } from "./teaser.js";
+import { DEMO_TEASER, mostQuoted, segments, summarize } from "./teaser.js";
 
 const none = { ats: [], hr: [], techLead: [], hiringManager: [], prosecutor: [] };
 
 describe("summarize", () => {
+  it("strona startowa pokazuje dokladnie to, co jest w nagraniu", () => {
+    expect(summarize(readRecording(raw))).toEqual(DEMO_TEASER);
+  });
+
   it("nagranie bez potrzebnych zdarzen konczy sie bledem z nazwa brakujacego, a nie zerami na stronie", () => {
     const { events } = readRecording(raw);
     expect(() => summarize({ events: [] })).toThrow("Puste nagranie");
@@ -44,6 +48,11 @@ describe("segments", () => {
     expect(segments("B1 i B1", { ...none, hr: ["B1"] }).map((s) => s.critics.length)).toEqual([1, 0, 1]);
   });
 
+  it("w CV z demo zdanie o braku testow zacytowali wszyscy krytycy", () => {
+    const line = "Domowy budżet — Java 17, Spring Boot, H2. Projekt zaliczeniowy z bootcampu, bez testów automatycznych.";
+    const top = segments(line, DEMO_TEASER.quotes).find((s) => s.text === "Projekt zaliczeniowy z bootcampu, bez testów automatycznych.");
+    expect(top?.critics).toEqual(["ats", "hr", "techLead", "hiringManager", "prosecutor"]);
+  });
 });
 
 describe("mostQuoted", () => {

@@ -81,6 +81,55 @@ export function summarize(recording: Recording): Teaser {
   };
 }
 
+/** Nagrana rozprawa z demo; zgodnosc z recording.sse sprawdza teaser.test.ts. */
+export const DEMO_TEASER: Teaser = {
+  docket: "ef0a36bd",
+  seconds: 90,
+  calls: 20,
+  costNanoUsd: 324_292_385,
+  rounds: 2,
+  statements: 10,
+  mindChanges: 3,
+  opening: { hr: 7, techLead: 5, hiringManager: 6, prosecutor: 5, ats: 5 },
+  quotes: {
+    hr: [
+      "Angielski — B1.",
+      "Projekt zaliczeniowy z bootcampu, bez testów automatycznych.",
+      "Java 17, Spring Boot, H2.",
+      "Java, Spring Boot (podstawy), SQL, Git, Excel, VBA, wiedza o rozliczeniach i płatnościach.",
+      "W 2026 roku ukończyłam bootcamp Java i szukam pierwszej pracy jako programistka.",
+    ],
+    techLead: [
+      "Projekt zaliczeniowy z bootcampu, bez testów automatycznych.",
+      "Java 17, Spring Boot, H2. Aplikacja do zapisywania wydatków z prostym REST API.",
+      "Java, Spring Boot (podstawy), SQL, Git, Excel, VBA, wiedza o rozliczeniach i płatnościach.",
+      "Napisałam makra VBA w Excelu, które automatyzowały import wyciągów bankowych.",
+    ],
+    hiringManager: [
+      "Napisałam makra VBA w Excelu, które automatyzowały import wyciągów bankowych.",
+      "Uzgadniałam wpływy od operatorów płatności z fakturami sprzedaży.",
+      "Projekt zaliczeniowy z bootcampu, bez testów automatycznych.",
+      "Java, Spring Boot (podstawy), SQL, Git, Excel, VBA, wiedza o rozliczeniach i płatnościach.",
+      "Angielski — B1.",
+    ],
+    prosecutor: [
+      "Projekt zaliczeniowy z bootcampu, bez testów automatycznych.",
+      "Java, Spring Boot, SQL, Git, podstawy testów.",
+      "Java 17, Spring Boot, H2.",
+      "Java, Spring Boot (podstawy), SQL, Git, Excel, VBA, wiedza o rozliczeniach i płatnościach.",
+      "Angielski — B1.",
+    ],
+    ats: [
+      "Projekt zaliczeniowy z bootcampu, bez testów automatycznych.",
+      "Java, Spring Boot (podstawy), SQL, Git, Excel, VBA, wiedza o rozliczeniach i płatnościach.",
+      "Java 17, Spring Boot, H2.",
+      "Szkoła Kodu Akademia",
+      "Angielski — B1.",
+    ],
+  },
+  protocol: { assessed: 46, prosecuted: 48, debated: 74, verdict: 90 },
+};
+
 /** Fragment linii CV i krytycy, ktorzy go zacytowali (pusta lista = nikt). */
 export interface Segment {
   readonly text: string;
