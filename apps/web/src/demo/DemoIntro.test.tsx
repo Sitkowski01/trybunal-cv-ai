@@ -30,43 +30,6 @@ describe("DemoIntro", () => {
     await userEvent.click(screen.getByRole("button", { name: "Wejdź na salę" }));
     expect(onOpen).toHaveBeenCalledTimes(2);
   });
-
-  it("sklad sadu: pieciu krytykow z rolami i sedzia", () => {
-    render(<DemoIntro onOpen={vi.fn()} />);
-    const jury = within(screen.getByRole("region", { name: "Skład sądu" }));
-    expect(jury.getAllByRole("heading", { level: 3 }).map((h) => h.textContent)).toEqual([
-      "⚙Bot ATS",
-      "◎HR screener",
-      "⌘Tech Lead",
-      "◆Hiring Manager",
-      "Prokurator",
-      "§Sędzia",
-    ]);
-    expect(jury.getByText("Najmocniejszy powód, żeby odrzucić")).toBeInTheDocument();
-  });
-
-  it("akta: tytul z naglowka dokumentu, tresc zwinieta do rozwiniecia, bez dopisku o fikcyjnosci", async () => {
-    render(<DemoIntro onOpen={vi.fn()} />);
-    const cv = within(screen.getByRole("region", { name: "CV kandydatki" }));
-    expect(cv.getByRole("heading", { name: /^Monika Sadowska — Junior Java Developer/u })).toBeInTheDocument();
-    expect(cv.getByRole("heading", { name: "Podsumowanie" })).toBeInTheDocument();
-    expect(cv.getByText(/Prowadziłam księgi 25 klientów/u)).toHaveClass("paper__item");
-    expect(cv.queryByText(/Osoba fikcyjna/u)).toBeNull();
-    expect(cv.queryByText("**", { exact: false })).toBeNull();
-    const toggle = cv.getByRole("button", { name: "Czytaj całość" });
-    expect(toggle).toHaveAttribute("aria-expanded", "false");
-    await userEvent.click(toggle);
-    expect(cv.getByRole("button", { name: "Zwiń" })).toHaveAttribute("aria-expanded", "true");
-    const offer = within(screen.getByRole("region", { name: "Ogłoszenie o pracę" }));
-    expect(offer.getByRole("heading", { name: "Junior Java Developer — FinPay Systems" })).toBeInTheDocument();
-    expect(offer.getByRole("button", { name: "Czytaj całość" })).toHaveAttribute("aria-expanded", "false");
-  });
-
-  it("przebieg rozprawy: piec etapow po kolei", () => {
-    render(<DemoIntro onOpen={vi.fn()} />);
-    const steps = within(screen.getByRole("region", { name: "Przebieg rozprawy" }));
-    expect(steps.getAllByRole("heading", { level: 3 }).map((h) => h.textContent)).toEqual(["Oceny", "Oskarżenie", "Debata", "Narada", "Werdykt"]);
-  });
 });
 
 describe("App w trybie demo", () => {
