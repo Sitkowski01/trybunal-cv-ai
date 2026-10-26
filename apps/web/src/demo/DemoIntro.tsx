@@ -45,8 +45,15 @@ export function DemoIntro({ onOpen }: DemoIntroProps) {
   return (
     <article className="intro">
       <header className="hero">
-        <p className="hero__badge">Demo — odtwarzanie nagranej rozprawy</p>
-        <h1 className="hero__title">Trybunał CV</h1>
+        <p className="hero__badge">
+          <span className="hero__ticker" aria-hidden="true">
+            $TRYB
+          </span>
+          <span>Demo — odtwarzanie nagranej rozprawy</span>
+        </p>
+        <h1 className="hero__title">
+          Trybunał <span>CV</span>
+        </h1>
         <p className="hero__lead">Pięciu krytyków AI ocenia CV pod ogłoszenie, spiera się w debacie, a sędzia ogłasza werdykt.</p>
         <figure className="hero__art">
           <img src={sala} width={1600} height={724} alt="Sala rozpraw 3D: ława krytyków-robotów, sędzia w todze i smok-prokurator przy mównicy" />
