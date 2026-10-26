@@ -530,7 +530,7 @@ body:has(.intro)::before {
   }
 }
 
-/* Sklad sadu */
+/* Sklad sadu: karty jak w portfolio — grafitowy panel, portret na zielonej poswiacie */
 .jury__list {
   list-style: none;
   margin: 0;
@@ -545,11 +545,11 @@ body:has(.intro)::before {
   display: flex;
   flex-direction: column;
   padding: 0 1rem 1.1rem;
-  border: 1px solid var(--line);
+  border: 1px solid var(--i-line);
+  border-top: 2px solid var(--i-line-strong);
   border-radius: 14px;
   background:
-    radial-gradient(120% 70% at 50% 0%, rgb(212 169 74 / 0.22), transparent 60%),
-    linear-gradient(180deg, var(--bg-raised), var(--bg-sunken));
+    radial-gradient(120% 65% at 50% 0%, rgb(16 185 129 / 0.16), transparent 62%), linear-gradient(180deg, var(--i-panel), var(--i-panel-deep));
   transition:
     transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
     border-color 0.25s,
@@ -560,8 +560,10 @@ body:has(.intro)::before {
 
 .jury__card:hover {
   transform: translateY(-4px);
-  border-color: var(--brass-dim);
-  box-shadow: 0 18px 40px -20px rgb(0 0 0 / 0.9);
+  border-color: rgb(16 185 129 / 0.45);
+  box-shadow:
+    0 18px 40px -20px rgb(0 0 0 / 0.9),
+    0 0 25px -5px rgb(16 185 129 / 0.25);
 }
 
 .jury__portrait {
@@ -569,7 +571,7 @@ body:has(.intro)::before {
   width: 100%;
   height: auto;
   margin: 0 auto -0.25rem;
-  filter: drop-shadow(0 12px 16px rgb(0 0 0 / 0.55));
+  filter: drop-shadow(0 12px 16px rgb(0 0 0 / 0.6));
   transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
   transform-origin: 50% 100%;
 }
@@ -579,17 +581,18 @@ body:has(.intro)::before {
 }
 
 .jury__card h3 {
-  margin: 0.5rem 0 0.35rem;
+  margin: 0.55rem 0 0.4rem;
   font-size: 1.05rem;
+  font-weight: 700;
   display: flex;
   align-items: baseline;
-  gap: 0.4rem;
+  gap: 0.45rem;
 }
 
 .jury__emblem {
-  color: var(--brass);
-  font-family: var(--sans);
-  font-size: 0.95rem;
+  color: var(--i-bull);
+  font-family: var(--i-mono);
+  font-size: 0.9rem;
 }
 
 .jury__emblem svg {
@@ -598,24 +601,24 @@ body:has(.intro)::before {
 
 .jury__card p {
   margin: 0;
-  font-size: 0.875rem;
-  line-height: 1.45;
-  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--i-text);
 }
 
-/* Prokurator i sedzia wyrozniaja sie jak na sali: czerwien oskarzenia, mosiadz sedziego */
-.jury__card {
-  border-top-width: 3px;
-}
-
+/* Prokurator i sedzia wyroznieni jak na sali: czerwien oskarzenia, zielen werdyktu */
 .jury__card--prosecutor,
 .jury__card--prosecutor:hover {
-  border-top-color: var(--reject);
+  border-top-color: var(--i-bear);
+}
+
+.jury__card--prosecutor .jury__emblem {
+  color: var(--i-bear);
 }
 
 .jury__card--judge,
 .jury__card--judge:hover {
-  border-top-color: var(--brass);
+  border-top-color: var(--i-bull);
 }
 
 @keyframes card-in {
@@ -799,7 +802,7 @@ body:has(.intro)::before {
   }
 }
 
-/* Przebieg rozprawy: os z punktami jak wokanda */
+/* Przebieg rozprawy: os z numerami 01-05 w monospace, ostatni punkt to werdykt */
 .steps__list {
   list-style: none;
   counter-reset: step;
@@ -817,9 +820,8 @@ body:has(.intro)::before {
   top: 1.25rem;
   left: 1.25rem;
   right: 1.25rem;
-  height: 2px;
-  background: linear-gradient(90deg, var(--brass), var(--brass-dim) 70%, var(--reject));
-  opacity: 0.6;
+  height: 1px;
+  background: linear-gradient(90deg, var(--i-bull), var(--i-line-strong) 75%);
 }
 
 .steps__list li {
@@ -828,34 +830,39 @@ body:has(.intro)::before {
 }
 
 .steps__list li::before {
-  content: counter(step);
+  content: counter(step, decimal-leading-zero);
   display: grid;
   place-items: center;
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: 50%;
-  border: 2px solid var(--brass);
-  background: var(--bg);
-  color: var(--brass);
-  font: 600 1.05rem var(--serif);
+  border-radius: 10px;
+  border: 1px solid var(--i-line-strong);
+  background: var(--i-panel);
+  color: var(--i-bull);
+  font: 600 0.85rem var(--i-mono);
   position: relative;
 }
 
 .steps__list li:last-child::before {
   content: "§";
-  background: var(--brass);
-  color: #1b140e;
+  border-color: var(--i-bull);
+  background: var(--i-bull);
+  color: #022c22;
+  font-size: 1rem;
+  box-shadow: 0 0 20px rgb(16 185 129 / 0.35);
 }
 
 .steps__list h3 {
   margin: 0.9rem 0 0.3rem;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
+  font-weight: 700;
 }
 
 .steps__list p {
   margin: 0;
-  font-size: 0.9rem;
-  color: var(--text-muted);
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--i-text);
 }
 
 @media (max-width: 900px) {
@@ -867,11 +874,11 @@ body:has(.intro)::before {
   .steps__list::before {
     top: 1.25rem;
     bottom: 1.25rem;
-    left: calc(1.25rem - 1px);
+    left: 1.25rem;
     right: auto;
-    width: 2px;
+    width: 1px;
     height: auto;
-    background: linear-gradient(180deg, var(--brass), var(--brass-dim) 70%, var(--reject));
+    background: linear-gradient(180deg, var(--i-bull), var(--i-line-strong) 75%);
   }
 
   .steps__list li {
@@ -897,17 +904,16 @@ body:has(.intro)::before {
   justify-content: space-between;
   gap: 1rem 2rem;
   padding: clamp(1.5rem, 4vw, 2.25rem) clamp(1.25rem, 4vw, 2.5rem);
-  border: 1px solid var(--brass-dim);
+  border: 1px solid rgb(16 185 129 / 0.35);
   border-radius: 16px;
-  background:
-    radial-gradient(80% 140% at 100% 50%, rgb(212 169 74 / 0.18), transparent 60%),
-    var(--bg-raised);
+  background: radial-gradient(80% 140% at 100% 50%, rgb(16 185 129 / 0.16), transparent 60%), var(--i-panel);
 }
 
 .closing__text {
   margin: 0;
-  font-family: var(--serif);
-  font-size: clamp(1.3rem, 3vw, 1.75rem);
+  font: 700 clamp(1.3rem, 3vw, 1.7rem) / 1.25 var(--i-display);
+  letter-spacing: -0.01em;
+  color: var(--i-hi);
 }
 
 /* Formularz wniesienia */
