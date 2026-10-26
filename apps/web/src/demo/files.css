@@ -1,0 +1,153 @@
+/* --- Akta: CV z zaznaczonymi cytatami, z boku legenda i ogloszenie --- */
+.files__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  align-items: start;
+}
+
+.doc {
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  border: 1px solid var(--i-line);
+  border-radius: 14px;
+  background: var(--i-surface);
+  box-shadow: 0 30px 60px -40px rgb(0 0 0 / 0.9);
+}
+
+.doc__path {
+  margin: 0 0 1.25rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px dashed var(--i-line);
+  font: 500 0.75rem/1.2 var(--i-mono);
+  color: var(--i-faint);
+}
+
+.doc__title {
+  font-size: 1.3rem;
+  line-height: 1.3;
+}
+
+.doc__body {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  line-height: 1.85;
+}
+
+.doc__body h4,
+.offer__body h4 {
+  margin: 1.6rem 0 0.3rem;
+  font: 600 0.72rem/1.2 var(--i-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--i-faint);
+}
+
+.doc__body p,
+.offer__body p {
+  margin: 0;
+}
+
+.doc__item {
+  position: relative;
+  padding-left: 1.1rem;
+}
+
+.doc__item::before {
+  content: "–";
+  position: absolute;
+  left: 0;
+  color: var(--i-faint);
+}
+
+/* Zaznaczenie cytatu: im wiecej krytykow, tym mocniejsza zielen; przy 4-5 dodatkowo kreska pod spodem */
+mark.heat {
+  padding: 0.08em 0.15em;
+  margin: 0 -0.05em;
+  border-radius: 3px;
+  color: inherit;
+  background: var(--heat);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.heat--1 {
+  --heat: var(--heat-1);
+}
+
+.heat--2 {
+  --heat: var(--heat-2);
+}
+
+.heat--3 {
+  --heat: var(--heat-3);
+}
+
+.heat--4 {
+  --heat: var(--heat-4);
+}
+
+.heat--5 {
+  --heat: var(--heat-5);
+}
+
+mark.heat--4,
+mark.heat--5 {
+  color: var(--i-hi);
+  box-shadow: inset 0 -2px 0 var(--i-accent-hi);
+}
+
+.files__side {
+  display: grid;
+  gap: 1.25rem;
+  position: sticky;
+  top: 1.5rem;
+}
+
+.legend {
+  padding: 1.25rem 1.35rem;
+  border: 1px solid var(--i-line);
+  border-radius: 14px;
+  background: var(--i-surface);
+}
+
+.legend__title {
+  margin: 0 0 0.6rem;
+  font: 500 0.72rem/1.2 var(--i-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--i-muted);
+}
+
+.legend__scale {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3px;
+}
+
+.legend__scale li {
+  padding: 0.35rem 0;
+  border-radius: 4px;
+  background: var(--heat);
+  color: var(--i-hi);
+  font: 600 0.8rem/1 var(--i-mono);
+  text-align: center;
+}
+
+.legend__top {
+  margin: 1.25rem 0 0;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--i-line);
+  font-size: 0.85rem;
+  color: var(--i-muted);
+}
+
+.legend__top q {
+  display: block;
+  margin: 0.4rem 0 0.6rem;
+  font: 500 1.08rem/1.4 var(--i-display);
+  color: var(--i-hi);
+  quotes: "„" "”";
+}
