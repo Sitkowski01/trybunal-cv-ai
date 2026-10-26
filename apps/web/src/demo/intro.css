@@ -190,3 +190,71 @@ body:has(.intro)::before {
   margin-top: clamp(3rem, 7vw, 5.5rem);
   border-top: 1px solid var(--i-line);
 }
+
+@media (max-width: 760px) {
+  .section-head {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .section-head__note {
+    grid-column: 1;
+    grid-row: auto;
+    margin-top: 0.5rem;
+  }
+}
+
+/* --- Zamkniecie: pieczec, zdanie i druga akcja --- */
+.closing {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1.25rem 2rem;
+  margin-top: clamp(3rem, 7vw, 5.5rem);
+  padding: clamp(1.5rem, 4vw, 2.25rem);
+  border: 1px solid var(--i-line);
+  border-radius: 16px;
+  background: radial-gradient(70% 160% at 0% 50%, rgb(16 185 129 / 0.1), transparent 60%), var(--i-surface);
+}
+
+/* Pieczec: podwojny pierscien jak na lakowej pieczeci akt */
+.closing__seal {
+  display: grid;
+  place-items: center;
+  width: 4.25rem;
+  height: 4.25rem;
+  border-radius: 50%;
+  border: 1.5px solid var(--i-accent);
+  box-shadow:
+    inset 0 0 0 5px var(--i-surface),
+    inset 0 0 0 6px rgb(16 185 129 / 0.5);
+  color: var(--i-accent-hi);
+  font: 600 1.6rem/1 var(--i-display);
+}
+
+.closing__text h2 {
+  font-size: clamp(1.35rem, 2.6vw, 1.75rem);
+}
+
+.closing__text p {
+  margin: 0.35rem 0 0;
+  color: var(--i-muted);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 760px) {
+  .closing {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .closing .intro__primary {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro__primary,
+  .intro__secondary,
+  .intro__secondary::after {
+    transition: none;
+  }
+}
