@@ -288,11 +288,138 @@ select:focus-visible {
   }
 }
 
-/* Sala na razie bez ramy */
+/* Glowny przycisk: mosiadz z blyskiem przesuwajacym sie po najechaniu */
+.hero__open {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 3.25rem;
+  padding: 0.8rem 1.6rem;
+  font-size: 1.1rem;
+  border-color: #e6c06a;
+  background: linear-gradient(180deg, #e6c06a, var(--brass) 60%, #b98f39);
+  box-shadow:
+    0 10px 30px -10px rgb(212 169 74 / 0.6),
+    inset 0 1px 0 rgb(255 255 255 / 0.35);
+  transition:
+    transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.2s;
+}
+
+.hero__open::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.45) 50%, transparent 65%);
+  transform: translateX(-120%);
+}
+
+.hero__open:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 16px 36px -10px rgb(212 169 74 / 0.75),
+    inset 0 1px 0 rgb(255 255 255 / 0.35);
+}
+
+.hero__open:hover::after {
+  transform: translateX(120%);
+  transition: transform 0.7s ease;
+}
+
+.hero__open:active {
+  transform: translateY(0);
+}
+
+/* Sala w ramie: zloty brzeg, glebia i powolny najazd kamery */
+.hero__art {
+  grid-area: art;
+  position: relative;
+  align-self: center;
+  border-radius: 16px;
+  padding: 6px;
+  overflow: hidden; /* najazd kamery zostaje w ramie */
+  background: linear-gradient(145deg, #e6c06a, #6b4f1f 45%, #c79b45);
+  box-shadow:
+    0 40px 80px -30px rgb(0 0 0 / 0.85),
+    0 0 0 1px rgb(0 0 0 / 0.4),
+    0 0 120px -40px rgb(212 169 74 / 0.45);
+  animation: art-in 1s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
 .hero__art img {
   display: block;
   width: 100%;
   height: auto;
+  border-radius: 11px;
+  animation: dolly 24s ease-in-out 1s infinite alternate;
+  transform-origin: 50% 40%;
+}
+
+.hero__art::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 11px;
+  pointer-events: none;
+  box-shadow: inset 0 0 60px rgb(22 17 13 / 0.45);
+}
+
+.hero__art figcaption {
+  position: absolute;
+  left: 1.1rem;
+  bottom: 1.1rem;
+  max-width: calc(100% - 2.2rem);
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: rgb(22 17 13 / 0.78);
+  backdrop-filter: blur(6px);
+  color: var(--text);
+  font-size: 0.8rem;
+  z-index: 1;
+}
+
+@keyframes art-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+}
+
+@keyframes dolly {
+  to {
+    transform: scale(1.07) translateY(1.5%);
+  }
+}
+
+@media (max-width: 900px) {
+  .hero__art {
+    margin-top: 1.75rem;
+  }
+
+  .hero__art figcaption {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero__open {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__art,
+  .hero__art img {
+    animation: none;
+  }
+
+  .hero__open,
+  .hero__open::after {
+    transition: none;
+  }
 }
 
 /* CV i oferta do rozwiniecia (do czasu kartek) */
