@@ -103,8 +103,8 @@ export function DemoIntro({ onOpen }: DemoIntroProps) {
           Akta sprawy
         </h2>
         <div className="files__list">
-          <Paper label="CV kandydatki" text={DEMO_CASE.cv} />
-          <Paper label="Ogłoszenie o pracę" text={DEMO_CASE.offer} />
+          <Paper label="CV kandydatki" file="cv-monika-sadowska.md" text={DEMO_CASE.cv} />
+          <Paper label="Ogłoszenie o pracę" file="oferta-junior-java-fintech.md" text={DEMO_CASE.offer} />
         </div>
       </section>
 
@@ -143,31 +143,36 @@ function Tag({ n }: { readonly n: string }) {
   );
 }
 
-/** Dokument z akt jako kartka: tytul z naglowka Markdown, reszta zwinieta do rozwiniecia. */
-function Paper({ label, text }: { readonly label: string; readonly text: string }) {
+/** Dokument z akt jako plik w podgladzie: sciezka z examples/, tytul z naglowka Markdown, reszta zwinieta. */
+function Paper({ label, file, text }: { readonly label: string; readonly file: string; readonly text: string }) {
   const [open, setOpen] = useState(false);
   const [first = "", ...rest] = text.trim().split("\n");
   const id = useId();
   return (
     <section className={`paper${open ? " paper--open" : ""}`} aria-label={label}>
-      <p className="paper__label">{label}</p>
-      <h3 className="paper__title">{first.replace(/^#\s*/u, "")}</h3>
-      <div id={id} className="paper__body">
-        {rest.map((line, i) => (
-          <PaperLine key={i} line={line} />
-        ))}
+      <div className="paper__bar">
+        <span className="paper__file">examples/{file}</span>
       </div>
-      <button
-        type="button"
-        className="paper__toggle"
-        aria-expanded={open}
-        aria-controls={id}
-        onClick={() => {
-          setOpen(!open);
-        }}
-      >
-        {open ? "Zwiń" : "Czytaj całość"}
-      </button>
+      <div className="paper__content">
+        <p className="paper__label">{label}</p>
+        <h3 className="paper__title">{first.replace(/^#\s*/u, "")}</h3>
+        <div id={id} className="paper__body">
+          {rest.map((line, i) => (
+            <PaperLine key={i} line={line} />
+          ))}
+        </div>
+        <button
+          type="button"
+          className="paper__toggle"
+          aria-expanded={open}
+          aria-controls={id}
+          onClick={() => {
+            setOpen(!open);
+          }}
+        >
+          {open ? "Zwiń" : "Czytaj całość"}
+        </button>
+      </div>
     </section>
   );
 }
