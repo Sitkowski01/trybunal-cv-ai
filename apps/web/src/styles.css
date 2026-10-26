@@ -422,6 +422,129 @@ select:focus-visible {
   }
 }
 
+/* Sklad sadu */
+.jury__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.jury__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 0 1rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background:
+    radial-gradient(120% 70% at 50% 0%, rgb(212 169 74 / 0.22), transparent 60%),
+    linear-gradient(180deg, var(--bg-raised), var(--bg-sunken));
+  transition:
+    transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 0.25s,
+    box-shadow 0.25s;
+  animation: card-in 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(0.3s + var(--i, 0) * 70ms);
+}
+
+.jury__card:hover {
+  transform: translateY(-4px);
+  border-color: var(--brass-dim);
+  box-shadow: 0 18px 40px -20px rgb(0 0 0 / 0.9);
+}
+
+.jury__portrait {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto -0.25rem;
+  filter: drop-shadow(0 12px 16px rgb(0 0 0 / 0.55));
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transform-origin: 50% 100%;
+}
+
+.jury__card:hover .jury__portrait {
+  transform: translateY(-6px) rotate(-2deg) scale(1.04);
+}
+
+.jury__card h3 {
+  margin: 0.5rem 0 0.35rem;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.jury__emblem {
+  color: var(--brass);
+  font-family: var(--sans);
+  font-size: 0.95rem;
+}
+
+.jury__emblem svg {
+  vertical-align: -0.15em;
+}
+
+.jury__card p {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+/* Prokurator i sedzia wyrozniaja sie jak na sali: czerwien oskarzenia, mosiadz sedziego */
+.jury__card {
+  border-top-width: 3px;
+}
+
+.jury__card--prosecutor,
+.jury__card--prosecutor:hover {
+  border-top-color: var(--reject);
+}
+
+.jury__card--judge,
+.jury__card--judge:hover {
+  border-top-color: var(--brass);
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+@media (max-width: 1100px) {
+  .jury__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .jury__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .jury__card {
+    padding: 0 0.75rem 0.9rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jury__card {
+    animation: none;
+  }
+
+  .jury__card,
+  .jury__portrait {
+    transition: none;
+  }
+}
+
 /* CV i oferta do rozwiniecia (do czasu kartek) */
 .intro summary {
   cursor: pointer;

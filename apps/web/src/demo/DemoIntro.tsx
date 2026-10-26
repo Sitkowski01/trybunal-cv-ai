@@ -1,11 +1,29 @@
+import type { CSSProperties } from "react";
+import { CRITIC_LABELS } from "../labels.js";
 import { DEMO_CASE } from "./case.js";
+import ats from "./img/ats.webp";
+import hiringManager from "./img/hiringManager.webp";
+import hr from "./img/hr.webp";
+import judge from "./img/judge.webp";
+import prosecutor from "./img/prosecutor.webp";
 import sala from "./img/sala.webp";
+import techLead from "./img/techLead.webp";
 
 export const REPO_URL = "https://github.com/Sitkowski01/trybunal-cv-ai";
 
 export interface DemoIntroProps {
   readonly onOpen: () => void;
 }
+
+/** Portrety z tych samych modeli GLB co sala (render w three.js), kolejnosc jak na lawie przysieglych. */
+const BENCH = [
+  { id: "ats", portrait: ats, ...CRITIC_LABELS.ats },
+  { id: "hr", portrait: hr, ...CRITIC_LABELS.hr },
+  { id: "techLead", portrait: techLead, ...CRITIC_LABELS.techLead },
+  { id: "hiringManager", portrait: hiringManager, ...CRITIC_LABELS.hiringManager },
+  { id: "prosecutor", portrait: prosecutor, ...CRITIC_LABELS.prosecutor },
+  { id: "judge", portrait: judge, name: "Sędzia", role: "Ogłasza werdykt według stałej reguły i pisze uzasadnienie z poprawkami CV", emblem: "§" },
+] as const;
 
 /**
  * Strona startowa demo zamiast formularza: formularz przyjmowalby dowolne CV, a odtworzyl
@@ -38,6 +56,24 @@ export function DemoIntro({ onOpen }: DemoIntroProps) {
           koszt wywołań modelu.
         </p>
       </header>
+
+      <section className="jury" aria-labelledby="jury-title">
+        <h2 id="jury-title">Skład sądu</h2>
+        <ul className="jury__list">
+          {BENCH.map((member, i) => (
+            <li key={member.id} className={`jury__card jury__card--${member.id}`} style={{ "--i": i } as CSSProperties}>
+              <img className="jury__portrait" src={member.portrait} width={360} height={450} alt="" loading="lazy" />
+              <h3>
+                <span className="jury__emblem" aria-hidden="true">
+                  {member.emblem === "⚖" ? <Scales size={15} /> : member.emblem}
+                </span>
+                {member.name}
+              </h3>
+              <p>{member.role}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
 
       <details>
         <summary>CV kandydatki</summary>

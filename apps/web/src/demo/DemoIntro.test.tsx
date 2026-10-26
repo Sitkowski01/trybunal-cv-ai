@@ -1,4 +1,4 @@
-import { act, render, screen } from "@testing-library/react";
+import { act, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { App } from "../App.js";
@@ -28,6 +28,20 @@ describe("DemoIntro", () => {
     expect(screen.getByRole("link", { name: "Własne CV: uruchom projekt lokalnie" })).toHaveAttribute("href", REPO_URL);
     await userEvent.click(screen.getByRole("button", { name: "Otwórz rozprawę" }));
     expect(onOpen).toHaveBeenCalledOnce();
+  });
+
+  it("sklad sadu: pieciu krytykow z rolami i sedzia", () => {
+    render(<DemoIntro onOpen={vi.fn()} />);
+    const jury = within(screen.getByRole("region", { name: "Skład sądu" }));
+    expect(jury.getAllByRole("heading", { level: 3 }).map((h) => h.textContent)).toEqual([
+      "⚙Bot ATS",
+      "◎HR screener",
+      "⌘Tech Lead",
+      "◆Hiring Manager",
+      "Prokurator",
+      "§Sędzia",
+    ]);
+    expect(jury.getByText("Najmocniejszy powód, żeby odrzucić")).toBeInTheDocument();
   });
 
 });
