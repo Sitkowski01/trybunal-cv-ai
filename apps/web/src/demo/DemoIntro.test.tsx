@@ -1,4 +1,4 @@
-import { act, render, screen, within } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { App } from "../App.js";
@@ -8,6 +8,7 @@ import { DEMO_CASE } from "./case.js";
 import { DemoIntro, REPO_URL } from "./DemoIntro.js";
 import { readRecording } from "./recording.js";
 import { createReplay } from "./replay.js";
+import { DEMO_TEASER } from "./teaser.js";
 
 afterEach(() => {
   vi.useRealTimers();
@@ -15,15 +16,24 @@ afterEach(() => {
 });
 
 describe("DemoIntro", () => {
-  it("mowi, ze to nagranie bez serwera, pokazuje sale, sklad sadu i akta, prowadzi do repozytorium", async () => {
+  it("mowi, ze to nagranie bez serwera, pokazuje sale z punktami i liczby z nagrania, prowadzi do repozytorium", async () => {
     const onOpen = vi.fn();
     render(<DemoIntro onOpen={onOpen} />);
     expect(screen.getByRole("heading", { level: 1, name: "Trybunał CV" })).toBeInTheDocument();
     expect(screen.getByText("Demo — odtwarzanie nagranej rozprawy")).toBeInTheDocument();
+    expect(screen.getByText(`sygn. ${DEMO_TEASER.docket}`)).toBeInTheDocument();
     expect(screen.getByText(/nie ma serwera ani modelu/u)).toBeInTheDocument();
     expect(screen.getByText(DEMO_CASE.summary)).toBeInTheDocument();
     expect(screen.getByRole("img", { name: /Sala rozpraw 3D/u })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Własne CV: uruchom projekt lokalnie" })).toHaveAttribute("href", REPO_URL);
+    expect(screen.getByRole("link", { name: "Uruchom z własnym CV" })).toHaveAttribute("href", REPO_URL);
+    // Punkty na sali prowadza do sekcji ponizej.
+    expect(screen.getByRole("link", { name: "Sędzia" })).toHaveAttribute("href", "#lawa");
+    expect(screen.getByRole("link", { name: "Akta na stole" })).toHaveAttribute("href", "#akta");
+    expect(document.getElementById("lawa")).not.toBeNull();
+    expect(document.getElementById("akta")).not.toBeNull();
+    // Liczby z nagrania: 90 s, 20 wywolan za 0,32 USD.
+    expect(screen.getByText("od wniesienia do werdyktu").nextSibling).toHaveTextContent("90 s");
+    expect(screen.getByText("20 wywołań modelu").nextSibling).toHaveTextContent("$0,32");
     await userEvent.click(screen.getByRole("button", { name: "Otwórz rozprawę" }));
     expect(onOpen).toHaveBeenCalledOnce();
     // Drugi start na koncu strony, dla tych, ktorzy doczytali akta.
