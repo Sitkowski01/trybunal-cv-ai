@@ -1,24 +1,47 @@
-/* Sala rozpraw: ciemne drewno, mosiadz, pergamin dla dokumentow. Kolory jako tokeny. */
+/*
+ * Paleta i kroje z portfolio: grafit, jedna zielen jako akcent, czerwien tylko dla oskarzenia i odrzucenia.
+ * Sala 3D zostaje w drewnie i mosiadzu — to, co rysujemy nad nia (dymki, oceny, tabliczka), ma osobne
+ * tokeny --scene-*, zeby zmiana interfejsu jej nie ruszala.
+ */
 :root {
-  --bg: #16110d;
-  --bg-raised: #221a14;
-  --bg-sunken: #100c09;
-  --line: #3b2f25;
-  --text: #efe6d8;
-  --text-muted: #b6a690;
-  --brass: #d4a94a;
-  --brass-dim: #8c6d2c;
-  --invite: #5fbf7f;
-  --reject: #e0655a;
-  --warn-bg: #3a1f16;
-  --paper: #f4ecdc;
-  --paper-text: #2a2119;
-  --paper-muted: #6d5e4c;
-  --ins: #cfe9cf;
-  --del: #f3d0cb;
+  --bg: #030712;
+  --bg-raised: #0f172a;
+  --bg-sunken: #0a1120;
+  --line: #1e293b;
+  --line-strong: #334155;
+  --text: #cbd5e1;
+  --text-hi: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-faint: #7a879c; /* >= 4,9:1 na tle strony i paneli (WCAG AA) */
+  --accent: #10b981;
+  --accent-hi: #34d399;
+  --accent-ink: #022c22;
+  --accent-soft: rgb(16 185 129 / 0.12);
+  --invite: #34d399;
+  --reject: #f87171;
+  --reject-soft: rgb(248 113 113 / 0.1);
+  --warn-bg: #2a1215;
+  --ins: rgb(16 185 129 / 0.22);
+  --del: rgb(248 113 113 / 0.18);
   --radius: 10px;
-  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --sans: "Inter Variable", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "JetBrains Mono Variable", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --display: "Space Grotesk Variable", "Inter Variable", system-ui, sans-serif;
+  /* Elementy w sali 3D: pergamin dymkow, mosiadz ocen, szeryfowy krój jak na wokandzie */
+  --scene-paper: #f4ecdc;
+  --scene-ink: #2a2119;
+  --scene-brass: #d4a94a;
+  --scene-brass-dim: #8c6d2c;
+  --scene-muted: #b6a690;
+  --scene-plate: rgb(22 17 13 / 82%);
+  --scene-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  /* Tymczasowo: stare nazwy tokenow dla sekcji jeszcze nieprzepisanych */
+  --brass: var(--accent);
+  --brass-dim: rgb(16 185 129 / 0.5);
+  --paper: var(--bg-sunken);
+  --paper-text: var(--text);
+  --paper-muted: var(--text-muted);
+  --serif: var(--display);
   color-scheme: dark;
 }
 
