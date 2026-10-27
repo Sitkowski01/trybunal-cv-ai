@@ -674,22 +674,24 @@ a:focus-visible {
   color: var(--text-hi);
 }
 
-/* Raport jako dokument na pergaminie */
+/* Uzasadnienie na pismie: dokument w panelu, jak akta na stronie startowej */
 .report {
-  background: var(--paper);
-  color: var(--paper-text);
-  border-radius: var(--radius);
-  padding: 1.5rem;
+  background: var(--bg-sunken);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: clamp(1.25rem, 3vw, 2rem);
 }
 
-.report h2,
 .report h3 {
-  color: var(--paper-text);
+  margin-top: 2rem;
+  font: 500 0.75rem/1.2 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-hi);
 }
 
-.report .report__meta,
 .report__empty {
-  color: var(--paper-muted);
+  color: var(--text-muted);
 }
 
 .report__list {
@@ -705,12 +707,16 @@ a:focus-visible {
   gap: 0.25rem;
 }
 
+.report__list--plain li::marker {
+  color: var(--text-faint);
+}
+
 .rewrite,
 .concern {
-  border: 1px solid #d9ccb3;
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
-  background: #fbf6ec;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.85rem 1.05rem;
+  background: var(--bg-raised);
 }
 
 .concern p {
@@ -718,24 +724,34 @@ a:focus-visible {
 }
 
 .concern--high {
-  border-left: 4px solid #b3392f;
+  border-left: 2px solid var(--reject);
 }
 
 .concern--medium {
-  border-left: 4px solid #b9862a;
+  border-left: 2px solid #fbbf24;
 }
 
 .diff {
   margin: 0;
+  color: var(--text-hi);
+  line-height: 1.8;
 }
 
 .diff ins {
   background: var(--ins);
-  text-decoration: underline;
+  color: var(--text-hi);
+  text-decoration: none;
+  box-shadow: inset 0 -1px 0 var(--accent-hi);
+  border-radius: 2px;
+  padding: 0 0.1em;
 }
 
 .diff del {
   background: var(--del);
+  color: var(--text-muted);
+  text-decoration-color: var(--reject);
+  border-radius: 2px;
+  padding: 0 0.1em;
 }
 
 .trial__actions {
@@ -756,11 +772,20 @@ a:focus-visible {
   top: 0.75rem;
   right: 0.75rem;
   z-index: 2;
-  background: rgb(22 17 13 / 75%);
-  color: var(--text);
-  border-color: var(--brass-dim);
+  background: rgb(3 7 18 / 0.78);
+  backdrop-filter: blur(6px);
+  color: var(--text-hi);
+  border-color: var(--line-strong);
   padding: 0.35rem 0.8rem;
-  font-size: 0.9rem;
+  font: 500 0.8rem/1.4 var(--mono);
+}
+
+@media (hover: hover) {
+  .stage__toggle:hover:not(:disabled) {
+    background: rgb(3 7 18 / 0.9);
+    border-color: var(--accent);
+    color: var(--text-hi);
+  }
 }
 
 .stage__toggle[aria-pressed="false"] {
@@ -773,7 +798,7 @@ a:focus-visible {
   place-items: center;
   margin: 0;
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-radius: 14px;
   background: var(--bg-sunken);
   color: var(--text-muted);
 }
@@ -783,8 +808,9 @@ a:focus-visible {
   aspect-ratio: 16 / 9;
   overflow: hidden;
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-radius: 14px;
   background: #cfd6e2;
+  box-shadow: 0 50px 90px -40px rgb(0 0 0 / 0.95);
 }
 
 .scene__bubble {
@@ -794,9 +820,9 @@ a:focus-visible {
   max-width: min(26rem, 70%);
   padding: 0.6rem 0.85rem;
   border-radius: 14px;
-  background: var(--paper);
-  color: var(--paper-text);
-  font: 0.95rem/1.4 var(--serif);
+  background: var(--scene-paper);
+  color: var(--scene-ink);
+  font: 0.95rem/1.4 var(--scene-serif);
   box-shadow: 0 6px 18px rgb(0 0 0 / 35%);
   pointer-events: none;
   visibility: hidden;
@@ -811,7 +837,7 @@ a:focus-visible {
   translate: -50% 0;
   border: 9px solid transparent;
   border-bottom: 0;
-  border-top-color: var(--paper);
+  border-top-color: var(--scene-paper);
 }
 
 /* Telefon: sala ma ok. 200 px wysokosci — mniejszy dymek, a przycisk nad sala, nie na niej. */
@@ -844,7 +870,7 @@ a:focus-visible {
 }
 
 .scene__bubble--judge {
-  border: 2px solid var(--brass);
+  border: 2px solid var(--scene-brass);
   font-weight: 600;
 }
 
@@ -854,11 +880,16 @@ a:focus-visible {
   top: 0;
   left: 0;
   padding: 0.1rem 0.55rem;
-  border: 1px solid var(--brass-dim);
+  border: 1px solid var(--scene-brass-dim);
   border-radius: 999px;
-  background: rgb(22 17 13 / 82%);
-  color: var(--brass);
-  font: 700 0.95rem/1.3 var(--sans);
+  background: var(--scene-plate);
+  color: var(--scene-brass);
+  font:
+    700 0.95rem/1.3 system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
   pointer-events: none;
   visibility: hidden;
   /* Nad ogonkiem dymka — ocena mowcy ma byc widoczna, gdy mowi. */
@@ -867,20 +898,20 @@ a:focus-visible {
 
 .scene__score s {
   margin-right: 0.3rem;
-  color: var(--text-muted);
+  color: var(--scene-muted);
   font-weight: 400;
 }
 
 .scene__score--changed {
-  border-color: var(--brass);
+  border-color: var(--scene-brass);
 }
 
 .scene__bubble--prosecutor {
-  border: 2px solid var(--reject);
+  border: 2px solid #e0655a;
 }
 
 .scene__revised {
-  color: var(--brass-dim);
+  color: var(--scene-brass-dim);
   white-space: nowrap;
 }
 
@@ -893,17 +924,17 @@ a:focus-visible {
   border: 3px solid currentcolor;
   border-radius: 8px;
   background: rgb(16 12 9 / 85%);
-  font: 700 clamp(1.4rem, 4vw, 2.6rem) / 1.1 var(--serif);
+  font: 700 clamp(1.4rem, 4vw, 2.6rem) / 1.1 var(--scene-serif);
   letter-spacing: 0.12em;
   animation: verdict-in 0.6s ease-out both;
 }
 
 .scene__verdict--invite {
-  color: var(--invite);
+  color: #5fbf7f;
 }
 
 .scene__verdict--reject {
-  color: var(--reject);
+  color: #e0655a;
 }
 
 @keyframes verdict-in {
@@ -913,13 +944,13 @@ a:focus-visible {
   }
 }
 
-
 @media (prefers-reduced-motion: reduce) {
   .scene__verdict {
     animation: none;
   }
 
-  .critic {
+  .critic,
+  button {
     transition: none;
   }
 
