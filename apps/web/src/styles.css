@@ -35,13 +35,6 @@
   --scene-muted: #b6a690;
   --scene-plate: rgb(22 17 13 / 82%);
   --scene-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-  /* Tymczasowo: stare nazwy tokenow dla sekcji jeszcze nieprzepisanych */
-  --brass: var(--accent);
-  --brass-dim: rgb(16 185 129 / 0.5);
-  --paper: var(--bg-sunken);
-  --paper-text: var(--text);
-  --paper-muted: var(--text-muted);
-  --serif: var(--display);
   color-scheme: dark;
 }
 
