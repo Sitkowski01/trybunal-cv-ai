@@ -91,6 +91,8 @@ export function TrialPage({ trialId, api, sources, anonymized = null, onClose, s
           )}
         </section>
       )}
+      {/* Nazwy krytykow to h3 — bez h2 czytnik ekranu przeskakiwal poziom naglowkow. */}
+      <h2 className="visually-hidden">Skład trybunału</h2>
       <Bench court={court} />
       <Proceedings court={court} />
       {trial?.verdict != null && trial.justification !== null && <VerdictPanel verdict={trial.verdict} justification={trial.justification} />}

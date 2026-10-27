@@ -12,6 +12,7 @@ describe("TrialPage na zywo", () => {
     send(...full.slice(0, 3));
     expect(status()).toHaveTextContent("Krytycy czytają akta: 2 z 5 ocen.");
     const bench = screen.getByRole("list", { name: "Skład trybunału" });
+    expect(screen.getByRole("heading", { level: 2, name: "Skład trybunału" })).toBeInTheDocument();
     expect(within(bench).getAllByText("czyta akta…")).toHaveLength(3);
     expect(within(bench).getByText("Ocena 7 na 10")).toBeInTheDocument();
     expect(screen.getByText("Oceny")).toHaveAttribute("aria-current", "step");
