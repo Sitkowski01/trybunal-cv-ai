@@ -226,7 +226,7 @@ a:focus-visible {
 
 .filing fieldset {
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-radius: 14px;
   background: var(--bg-raised);
   padding: 1rem 1.25rem 1.25rem;
   margin: 0;
@@ -234,9 +234,10 @@ a:focus-visible {
 }
 
 .filing legend {
-  font-family: var(--serif);
-  font-size: 1.25rem;
-  color: var(--brass);
+  font: 500 0.75rem/1.2 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-hi);
   padding: 0 0.4rem;
 }
 
@@ -256,21 +257,21 @@ a:focus-visible {
 .field select {
   width: 100%;
   font: inherit;
-  color: var(--text);
+  color: var(--text-hi);
   background: var(--bg-sunken);
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   border-radius: 8px;
   padding: 0.6rem 0.7rem;
 }
 
 .field textarea {
   resize: vertical;
-  font-size: 0.92rem;
+  font: 0.88rem/1.6 var(--mono);
 }
 
 .segmented {
   display: inline-flex;
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   border-radius: 999px;
   overflow: hidden;
 }
@@ -281,8 +282,8 @@ a:focus-visible {
 }
 
 .segmented label:has(input:checked) {
-  background: var(--brass);
-  color: #1b140e;
+  background: var(--accent);
+  color: var(--accent-ink);
   font-weight: 600;
 }
 
@@ -292,7 +293,7 @@ a:focus-visible {
 }
 
 .segmented label:has(input:focus-visible) {
-  outline: 3px solid var(--brass);
+  outline: 2px solid var(--accent-hi);
   outline-offset: -3px;
 }
 
