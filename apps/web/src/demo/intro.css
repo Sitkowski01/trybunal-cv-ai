@@ -2,7 +2,7 @@
  * Demo bez serwera: strona startowa nagranej rozprawy — sala, lawa, akta, protokol.
  * Paleta i kroje z portfolio (grafit, jedna zielen, Space Grotesk / Inter / JetBrains Mono), uklad
  * redakcyjny: sekcje oddzielone linia, naglowki w dwoch kolumnach, dane z nagrania zamiast ozdobnikow.
- * Tokeny tylko tutaj: sala rozpraw zostaje w drewnie i mosiadzu.
+ * Tlo strony i kroje sa wspolne w styles.css; tu tokeny ukladu strony startowej.
  */
 .intro {
   --i-bg: #030712;
@@ -34,24 +34,6 @@
   color: var(--i-text);
   font: 400 1rem/1.65 var(--i-sans);
   font-feature-settings: "cv11", "ss01";
-}
-
-/* Tlo jak w portfolio: prawie czarny grafit, swiatlo z gory po prawej, siatka znikajaca w dol */
-body:has(.intro) {
-  background: radial-gradient(60rem 32rem at 78% -8%, rgb(16 185 129 / 0.09), transparent 62%), #030712;
-  background-attachment: fixed;
-}
-
-body:has(.intro)::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    linear-gradient(rgb(148 163 184 / 0.045) 1px, transparent 1px) 0 0 / 64px 64px,
-    linear-gradient(90deg, rgb(148 163 184 / 0.045) 1px, transparent 1px) 0 0 / 64px 64px;
-  mask-image: linear-gradient(180deg, #000, transparent 55%);
 }
 
 .page:has(> .intro) {

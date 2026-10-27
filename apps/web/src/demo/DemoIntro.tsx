@@ -1,7 +1,3 @@
-// Fonty jak w portfolio, z paczki (CSP: tylko 'self'). Sala ich nie uzywa, wiec laduje je tylko strona startowa.
-import "@fontsource-variable/inter";
-import "@fontsource-variable/jetbrains-mono";
-import "@fontsource-variable/space-grotesk";
 import "./intro.css";
 import { INVITE_THRESHOLD } from "@trybunal/domain";
 import { Bench } from "./Bench.js";

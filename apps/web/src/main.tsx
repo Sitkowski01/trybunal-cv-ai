@@ -6,6 +6,10 @@ import { App } from "./App.js";
 import { readRecording } from "./demo/recording.js";
 import { createReplay, speedFromSearch } from "./demo/replay.js";
 import { detectSceneSupport } from "./scene/support.js";
+// Fonty jak w portfolio, z paczki (CSP: tylko 'self').
+import "@fontsource-variable/inter";
+import "@fontsource-variable/jetbrains-mono";
+import "@fontsource-variable/space-grotesk";
 import "./styles.css";
 
 // Punkt wejscia: prawdziwy fetch i EventSource albo (build --mode demo) odtwarzanie nagrania.
