@@ -314,13 +314,15 @@ a:focus-visible {
   gap: 0.75rem;
 }
 
-/* Sala rozpraw */
+/* Sala rozpraw: pasek etapow jak os protokolu, koszt jak licznik */
 .trial__bar {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
 }
 
 .timeline {
@@ -330,25 +332,43 @@ a:focus-visible {
   list-style: none;
   margin: 0;
   padding: 0;
+  counter-reset: phase;
 }
 
 .timeline__step {
-  padding: 0.3rem 0.8rem;
-  border-radius: 999px;
+  counter-increment: phase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 8px;
   border: 1px solid var(--line);
-  color: var(--text-muted);
-  font-size: 0.9rem;
+  color: var(--text-faint);
+  font-size: 0.88rem;
+}
+
+.timeline__step::before {
+  content: counter(phase, decimal-leading-zero);
+  font: 500 0.7rem/1 var(--mono);
+  color: inherit;
+  opacity: 0.8;
 }
 
 .timeline__step--done {
-  border-color: var(--brass-dim);
-  color: var(--brass);
+  border-color: rgb(16 185 129 / 0.35);
+  color: var(--text);
+}
+
+.timeline__step--done::before {
+  content: "✓";
+  color: var(--accent-hi);
+  opacity: 1;
 }
 
 .timeline__step--now {
-  background: var(--brass);
-  border-color: var(--brass);
-  color: #1b140e;
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
   font-weight: 600;
 }
 
@@ -360,13 +380,15 @@ a:focus-visible {
 
 .trial__cost {
   margin: 0;
+  font: 500 0.85rem/1 var(--mono);
   color: var(--text-muted);
   font-variant-numeric: tabular-nums;
 }
 
 .trial__status {
-  font-family: var(--serif);
-  font-size: 1.2rem;
+  font: 500 1.15rem/1.4 var(--display);
+  letter-spacing: -0.01em;
+  color: var(--text-hi);
   margin: 1.25rem 0;
 }
 
@@ -382,16 +404,20 @@ a:focus-visible {
 .critic {
   background: var(--bg-raised);
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-top: 2px solid var(--line-strong);
+  border-radius: 14px;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  transition: border-color 0.3s, transform 0.3s;
+  transition:
+    border-color 0.3s,
+    transform 0.3s,
+    box-shadow 0.3s;
 }
 
 .critic--prosecutor {
-  border-top: 3px solid var(--reject);
+  border-top-color: var(--reject);
 }
 
 .critic--thinking,
@@ -400,9 +426,10 @@ a:focus-visible {
 }
 
 .critic--speaking {
-  border-color: var(--brass);
+  border-color: rgb(16 185 129 / 0.6);
+  border-top-color: var(--accent);
   transform: translateY(-4px);
-  box-shadow: 0 6px 24px rgb(212 169 74 / 0.18);
+  box-shadow: 0 0 30px -8px rgb(16 185 129 / 0.35);
 }
 
 .critic--listening {
@@ -411,7 +438,7 @@ a:focus-visible {
 
 @keyframes pulse {
   50% {
-    border-color: var(--brass-dim);
+    border-color: rgb(16 185 129 / 0.4);
   }
 }
 
@@ -427,44 +454,56 @@ a:focus-visible {
   place-items: center;
   width: 2.2rem;
   height: 2.2rem;
-  border-radius: 50%;
-  border: 1px solid var(--brass-dim);
-  color: var(--brass);
-  font-size: 1.1rem;
+  border-radius: 8px;
+  border: 1px solid var(--line-strong);
+  background: var(--bg-sunken);
+  color: var(--accent-hi);
+  font-size: 1.05rem;
+}
+
+.critic--prosecutor .critic__emblem {
+  color: var(--reject);
 }
 
 .critic__name {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
 }
 
 .critic__role {
   margin: 0.15rem 0 0;
   color: var(--text-muted);
   font-size: 0.8rem;
-  line-height: 1.35;
+  line-height: 1.4;
 }
 
 .critic__score {
-  font-family: var(--serif);
+  font-family: var(--display);
   font-variant-numeric: tabular-nums;
 }
 
 .critic__value {
   font-size: 2.4rem;
-  color: var(--brass);
+  color: var(--text-hi);
   font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.critic--speaking .critic__value {
+  color: var(--accent-hi);
 }
 
 .critic__was {
-  color: var(--text-muted);
+  color: var(--text-faint);
   margin-right: 0.15rem;
   text-decoration: line-through;
 }
 
 .critic__scale,
 .critic__pending {
-  color: var(--text-muted);
+  color: var(--text-faint);
+  font-family: var(--mono);
+  font-size: 0.85rem;
 }
 
 .critic__pending {
@@ -473,22 +512,26 @@ a:focus-visible {
 
 .critic__activity {
   margin: 0;
-  font-size: 0.8rem;
+  font: 500 0.7rem/1.3 var(--mono);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+}
+
+.critic--speaking .critic__activity {
+  color: var(--accent-hi);
 }
 
 .critic__summary,
 .critic__statement {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
 }
 
 .critic__statement {
-  border-left: 2px solid var(--brass-dim);
+  border-left: 2px solid var(--accent);
   padding-left: 0.6rem;
-  font-style: italic;
+  color: var(--text-hi);
 }
 
 .proceedings,
