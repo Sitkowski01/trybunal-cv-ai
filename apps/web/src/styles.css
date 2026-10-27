@@ -49,30 +49,73 @@
   box-sizing: border-box;
 }
 
+/* Tlo jak w portfolio: prawie czarny grafit, swiatlo z gory po prawej, siatka znikajaca w dol */
 body {
   margin: 0;
-  background: radial-gradient(ellipse at top, #2a1f17 0%, var(--bg) 60%) fixed, var(--bg);
+  background:
+    radial-gradient(60rem 32rem at 78% -8%, rgb(16 185 129 / 0.09), transparent 62%) fixed,
+    var(--bg);
   color: var(--text);
-  font: 16px/1.55 var(--sans);
+  font: 16px/1.6 var(--sans);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(rgb(148 163 184 / 0.045) 1px, transparent 1px) 0 0 / 64px 64px,
+    linear-gradient(90deg, rgb(148 163 184 / 0.045) 1px, transparent 1px) 0 0 / 64px 64px;
+  mask-image: linear-gradient(180deg, #000, transparent 55%);
+}
+
+::selection {
+  background: rgb(16 185 129 / 0.35);
+  color: var(--text-hi);
 }
 
 h1,
 h2,
 h3 {
-  font-family: var(--serif);
+  font-family: var(--display);
   font-weight: 600;
   line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--text-hi);
 }
 
 button {
   font: inherit;
   cursor: pointer;
-  border: 1px solid var(--brass);
-  background: var(--brass);
-  color: #1b140e;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--accent-ink);
   font-weight: 600;
   padding: 0.6rem 1.2rem;
   border-radius: var(--radius);
+  transition:
+    background-color 0.18s,
+    border-color 0.18s,
+    color 0.18s;
+}
+
+@media (hover: hover) {
+  button:hover:not(:disabled) {
+    background: var(--accent-hi);
+    border-color: var(--accent-hi);
+  }
+
+  .button--ghost:hover:not(:disabled) {
+    background: var(--accent-soft);
+    color: var(--text-hi);
+  }
+
+  .button--danger:hover:not(:disabled) {
+    background: var(--reject-soft);
+    border-color: var(--reject);
+  }
 }
 
 button:disabled {
@@ -83,19 +126,21 @@ button:disabled {
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
-select:focus-visible {
-  outline: 3px solid var(--brass);
-  outline-offset: 2px;
+select:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--accent-hi);
+  outline-offset: 3px;
 }
 
 .button--ghost {
   background: transparent;
-  color: var(--brass);
+  border-color: var(--line-strong);
+  color: var(--text-hi);
 }
 
 .button--danger {
   background: transparent;
-  border-color: var(--reject);
+  border-color: rgb(248 113 113 / 0.5);
   color: var(--reject);
 }
 
@@ -108,22 +153,50 @@ select:focus-visible {
   white-space: nowrap;
 }
 
+/* Naglowek rozprawy jak sygnatura na stronie startowej: maly napis, tytul, opis — wyrownane do tresci */
 .masthead {
-  text-align: center;
-  padding: 2.5rem 1rem 1rem;
+  display: grid;
+  /* Znacznik demo jest w kodzie ostatni, a na ekranie ma stac nad tytulem jak na stronie startowej */
+  grid-template-areas: "demo" "title" "lead";
+  justify-items: start;
+  gap: 0.6rem;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 2.5rem 1rem 0.5rem;
 }
 
 .masthead h1 {
+  grid-area: title;
   margin: 0;
-  font-size: clamp(2rem, 6vw, 3.2rem);
-  color: var(--brass);
-  letter-spacing: 0.04em;
+  font: 700 clamp(1.9rem, 4vw, 2.6rem) / 1 var(--display);
+  letter-spacing: -0.04em;
 }
 
 .masthead p {
-  margin: 0.5rem auto 0;
+  grid-area: lead;
+  margin: 0;
   max-width: 40rem;
   color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.masthead .masthead__demo {
+  grid-area: demo;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font: 500 0.72rem/1.4 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.masthead .masthead__demo::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 2px;
+  background: var(--accent);
 }
 
 .page {
@@ -141,17 +214,7 @@ select:focus-visible {
 
 .notice--warn {
   background: var(--warn-bg);
-  border-color: var(--reject);
-}
-
-.masthead .masthead__demo {
-  display: inline-block;
-  margin-top: 0.75rem;
-  padding: 0.2rem 0.75rem;
-  border: 1px solid var(--brass-dim);
-  border-radius: 999px;
-  color: var(--brass);
-  font-size: 0.9rem;
+  border-color: rgb(248 113 113 / 0.5);
 }
 
 /* Formularz wniesienia */
